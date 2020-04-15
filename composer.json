@@ -9,6 +9,7 @@
         "altorouter/altorouter": "1.2.0",
         "symfony/var-dumper": "^5.0",
         "filp/whoops": "^2.7",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "fzaninotto/faker": "^1.9"
     }
 }
