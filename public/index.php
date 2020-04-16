@@ -1,11 +1,14 @@
 <?php
 
-use App\Router;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
 require '../vendor/autoload.php';
 
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+// Display errors and exceptions in a less painful way.
+// http://filp.github.io/whoops/
+$whoops = new Run;
+$whoops->pushHandler(new PrettyPageHandler);
 $whoops->register();
 
 //A lightning fast router for PHP : Altorouter
@@ -15,6 +18,7 @@ $router = new AltoRouter();
 $router = new App\Router(dirname(__DIR__) . '/views');
 
 $router
-    ->get('/blog', 'post/index', 'blog')
+    ->get('/', 'post/index', 'home')
+    ->get('/blog/[*:slug]-[i:id]', 'post/show', 'post')
     ->get('/blog/category', 'category/show', 'category')
     ->run();
