@@ -11,6 +11,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 </head>
+
 <body class="d-flex flex-column h-100">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -18,14 +19,10 @@
     </nav>
 
     <div class="container mt-4">
-        <?php $content ?>
+        <?php echo $content_for_layout ?>
     </div>
 
-    <footer class="bg-light py-4 footer mt-auto">
-
-
-
-    </footer>
+    <footer class="bg-light py-4 footer mt-auto"> Footer </footer>
 
 </body>
 </html>

@@ -40,7 +40,8 @@ class Router
         $view  = $match['target'];
         ob_start();
         require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
-        $content = ob_clean();
+        $content_for_layout = ob_get_clean();
+
         require $this->viewPath . DIRECTORY_SEPARATOR . 'layouts/default.php';
 
         return $this;
