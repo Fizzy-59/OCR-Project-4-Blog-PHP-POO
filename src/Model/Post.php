@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Helpers\Text;
 use DateTime;
+use Exception;
 
 class Post
 {
@@ -33,14 +34,14 @@ class Post
     /**
      * @return mixed
      */
-    public function getContent()
+    public function getFormattedContent()
     {
-        return $this->content;
+        return nl2br( htmlentities($this->content) );
     }
 
     /**
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCreatedAt()
     {
