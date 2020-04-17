@@ -33,7 +33,7 @@ $posts = $query->fetchAll(PDO::FETCH_CLASS, Post::class);
 
     <?php foreach ($posts as $post): ?>
         <div class="col-md-3">
-            <?= require 'card.php' ?>
+            <?php require 'card.php' ?>
         </div>
     <?php endforeach ?>
 
@@ -43,12 +43,12 @@ $posts = $query->fetchAll(PDO::FETCH_CLASS, Post::class);
 <div class="d-flex justify-content-between my-4">
 
     <?php if ($currentPage > 1): ?>
-        <a href=" <?= $router->url('home') ?> ?page= <?= $currentPage - 1 ?>" class="btn btn-primary">
+        <a href="<?= $router->url('home') ?>?page=<?= $currentPage - 1 ?>" class="btn btn-primary">
             &laquo; Page précèdente </a>
     <?php endif ?>
 
     <?php if ($currentPage < $pages): ?>
-        <a href=" <?= $router->url('home') ?> ?page= <?= $currentPage + 1 ?>" class="btn btn-primary">
+        <a href="<?= $router->url('home') ?>?page=<?= $currentPage + 1 ?>" class="btn btn-primary">
             Page suivante &raquo; </a>
     <?php endif ?>
 
