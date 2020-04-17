@@ -9,6 +9,9 @@ $pdo = new PDO('mysql:dbname=blog_poo;host=127.0.0.1;port=8889', 'root', 'root',
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
 
+$page = $_GET['page'] ?? 1;
+if (!filter_var($page, FILTER_VALIDATE_INT)) {throw new Exception('Numéro de page invalide'); };
+
 $currentPage = (int) ($_GET['page'] ?? 1);
 if ($currentPage <= 0) { throw new Exception('Numéro de page invalide'); };
 
