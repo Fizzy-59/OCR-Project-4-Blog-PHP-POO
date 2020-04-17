@@ -1,19 +1,14 @@
 <?php
 
+use App\Connection;
 use App\Model\Post;
+use App\Url;
 
 $title = 'Mon Blog';
 
-$pdo = new PDO('mysql:dbname=blog_poo;host=127.0.0.1;port=8889', 'root', 'root',
-    [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
+$pdo = Connection::getPDO();
 
-$page = $_GET['page'] ?? 1;
-if (!filter_var($page, FILTER_VALIDATE_INT)) {throw new Exception('Numéro de page invalide'); };
-
-$currentPage = (int) ($_GET['page'] ?? 1);
-if ($currentPage <= 0) { throw new Exception('Numéro de page invalide'); };
+$currentPage = Url::getPositiveInt('page', 1);
 
 $countPost = (int) $pdo->query('SELECT COUNT(id) FROM post')->fetch(PDO::FETCH_NUM)[0];
 
@@ -46,8 +41,10 @@ $posts = $query->fetchAll(PDO::FETCH_CLASS, Post::class);
 <div class="d-flex justify-content-between my-4">
 
     <?php if ($currentPage > 1): ?>
-        <a href="<?= $router->url('home') ?>?page=<?= $currentPage - 1 ?>" class="btn btn-primary">
-            &laquo; Page précèdente </a>
+        <?php $link = $router->url('home');
+        if ($currentPage > 2) $link .= '?page=' . ($currentPage -1);
+        ?>
+        <a href="<?= $link ?>" class="btn btn-primary"> &laquo; Page précèdente </a>
     <?php endif ?>
 
     <?php if ($currentPage < $pages): ?>

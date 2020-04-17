@@ -11,6 +11,26 @@ $whoops = new Run;
 $whoops->pushHandler(new PrettyPageHandler);
 $whoops->register();
 
+// Redirect if number of page is 1 without this parameter
+if (isset($_GET['page']) && $_GET['page'] === '1')
+{
+    $uri = $_SERVER['REQUEST_URI'];
+
+    // Left part of URI
+    explode('?', $_SERVER['REQUEST_URI'])[0];
+
+    $get = $_GET;
+    unset($get['page']);
+    $query = http_build_query($get);
+    if(empty($query))
+    {
+        $uri = $uri . '?' .$query;
+    }
+    http_response_code(301);
+    header('Location' . $uri);
+    exit();
+}
+
 //A lightning fast router for PHP : Altorouter
 //https://packagist.org/packages/altorouter/altorouter
 $router = new AltoRouter();

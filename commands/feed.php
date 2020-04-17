@@ -1,13 +1,14 @@
 <?php
+
+use App\Connection;
+use Faker\Factory;
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 // Faker lib for PHP https://github.com/fzaninotto/Faker
-$faker = \Faker\Factory::create('fr_FR');
+$faker = Factory::create('fr_FR');
 
-$pdo = new PDO('mysql:dbname=blog_poo;host=127.0.0.1;port=8889', 'root', 'root',
-[
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-]);
+$pdo = Connection::getPDO();
 
 // Clear database
 $pdo->exec('SET FOREIGN_KEY_CHECKS = 0');
