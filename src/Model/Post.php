@@ -49,7 +49,7 @@ class Post
     }
 
     /**
-     * @return array
+     * @return Category[]
      */
     public function getCategories(): array
     {
@@ -76,6 +76,12 @@ class Post
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    public function addCategory(Category $category): void
+    {
+        $this->categories[] = $category;
+        $category->setPost($this);
     }
 
 }

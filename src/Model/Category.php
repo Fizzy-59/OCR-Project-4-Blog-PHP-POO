@@ -9,6 +9,8 @@ class Category
     private $id;
     private $slug;
     private $name;
+    private $post_id;
+    private $post;
 
     /**
      * @return mixed
@@ -32,6 +34,19 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getPostId(): ?int
+    {
+        return $this->post_id;
+    }
+
+    /**
+     * @param mixed $post
+     */
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
     }
 
 
