@@ -57,7 +57,7 @@ class Post
     }
 
     /**
-     * Make an abstract for content of Post
+     * Make an abstract for content of PostTable
      *
      * @return String
      */

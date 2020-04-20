@@ -1,27 +1,17 @@
 <?php
 
-use App\PaginatedQuery;
-use App\Url;
+use App\Table\CategoryTable;
 use App\Connection;
-use App\Model\Category;
-use App\Model\Post;
+use App\Table\PostTable;
+
 
 $id = (int) $params['id'];
 $slug = $params['slug'];
 
 $pdo = Connection::getPDO();
 
-// Category
-$query = $pdo->prepare('SELECT * FROM category WHERE id = :id');
-$query->execute(['id' => $id]);
-$query->setFetchMode(PDO::FETCH_CLASS, Category::class);
-/** @var category|false */
-$category = $query->fetch();
+$category = (new CategoryTable($pdo))->find($id);
 
-if($category === false)
-{
-    throw new Exception('Aucune catégorie ne correspond à cet ID');
-}
 
 if ($category->getSlug() !== $slug)
 {
@@ -32,36 +22,7 @@ if ($category->getSlug() !== $slug)
 
 $title = "Catégorie : {$category->getName()}";
 
-$paginatedQuery = new PaginatedQuery
-(
-        "SELECT p.*
-    FROM post p
-    JOIN post_category pc on pc.post_id = p.id
-    WHERE pc.category_id = {$category->getId()}
-    ORDER BY created_at DESC",
-    "SELECT COUNT(category_id) FROM post_category WHERE category_id = {$category->getId()}"
-);
-
-/** @var Post[] */
-$posts = $paginatedQuery->getItems(Post::class);
-
-$postsById = [];
-foreach ($posts as $post)
-{
-    $postsById[$post->getId()] = $post;
-}
-$categories = $pdo->query
-(
-    'SELECT c.*, pc.post_id 
-    FROM post_category pc 
-    JOIN category c on c.id = pc.category_id 
-    WHERE pc.post_id IN(' . implode(',', array_keys($postsById)) . ') 
-')->fetchAll(PDO::FETCH_CLASS, Category::class);
-
-foreach ($categories as $category)
-{
-    $postsById[$category->getPostId()]->addCategory($category);
-}
+[$posts, $paginatedQuery] = (new PostTable($pdo))->findPaginatedForCategory($category->getId());
 
 $link = $router->url('category', ['id' => $category->getId(), 'slug' => $category->getSlug()]);
 

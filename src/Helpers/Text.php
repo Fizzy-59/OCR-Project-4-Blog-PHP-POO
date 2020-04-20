@@ -6,7 +6,7 @@ namespace App\Helpers;
 class Text
 {
     /**
-     * Cut and make an abstract for content of Post
+     * Cut and make an abstract for content of PostTable
      *
      * @param  string $content
      * @param  int $limit
