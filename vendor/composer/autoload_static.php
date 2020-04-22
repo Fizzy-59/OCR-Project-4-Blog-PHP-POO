@@ -18,6 +18,10 @@ class ComposerStaticInitbef7497bb30af0b7922e17e5a9d5ad6a
         array (
             'Whoops\\' => 7,
         ),
+        'V' => 
+        array (
+            'Valitron\\' => 9,
+        ),
         'T' => 
         array (
             'Twig\\' => 5,
@@ -46,6 +50,10 @@ class ComposerStaticInitbef7497bb30af0b7922e17e5a9d5ad6a
         'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
+        ),
+        'Valitron\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/valitron/src/Valitron',
         ),
         'Twig\\' => 
         array (

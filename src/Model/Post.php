@@ -84,4 +84,22 @@ class Post
         $category->setPost($this);
     }
 
+    /**
+     * @param mixed $name
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
+        return $this;
+    }
+
 }

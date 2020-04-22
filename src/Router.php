@@ -3,6 +3,7 @@
 namespace App;
 
 use AltoRouter;
+use Exception;
 
 class Router
 {
@@ -30,6 +31,22 @@ class Router
     public function post(string $url, string $view, ?string $name = null): self
     {
         $this->router->map('POST', $url, $view, $name);
+
+        return $this;
+    }
+
+    /**
+     * Responds to a route GET or POST
+     *
+     * @param  string $url
+     * @param  string $view
+     * @param  string|null $name
+     * @return $this
+     * @throws Exception
+     */
+    public function match(string $url, string $view, ?string $name = null): self
+    {
+        $this->router->map('POST|GET', $url, $view, $name);
 
         return $this;
     }
