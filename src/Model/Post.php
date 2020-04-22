@@ -96,9 +96,36 @@ class Post
     /**
      * @param mixed $content
      */
-    public function setContent(string $content): self
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param mixed $content
+     */
+    public function setContent($content): void
     {
         $this->content = $content;
+    }
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $created_at
+     */
+    public function setCreatedAt(string $date)
+    {
+        $this->created_at = $date;
+
         return $this;
     }
 

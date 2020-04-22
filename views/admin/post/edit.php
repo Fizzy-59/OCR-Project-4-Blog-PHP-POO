@@ -1,6 +1,7 @@
 <?php
 
 use App\Connection;
+use App\HTML\Form;
 use App\Table\PostTable;
 use App\Validator;
 
@@ -18,14 +19,16 @@ if (!empty($_POST))
     // https://github.com/vlucas/valitron
     Validator::lang('fr');
     $v = new Validator($_POST);
-    $v->labels(array(
-        'name' => 'Titre',
-        'content' => 'Contenu'
-    ));
-    $v->rule('required', 'name');
-    $v->rule('lengthBetween', 'name', 3, 200);
 
-    $post->setName($_POST['name']);
+    $v->rule('required', ['name', 'slug']);
+    $v->rule('lengthBetween', ['name', 'slug'], 3, 200);
+
+    $post
+        ->setName($_POST['name'])
+        ->setContent($_POST['content'])
+        ->setSlug($_POST['slug'])
+        ->setCreatedAt($_POST['created_at']);
+
 
     if ($v->validate())
     {
@@ -38,6 +41,7 @@ if (!empty($_POST))
     }
 }
 
+$form = new Form($post, $errors);
 ?>
 
 <?php
@@ -53,23 +57,13 @@ if ($success): ?>
 </div>
 <?php endif; ?>
 
-
-
-
 <h1>Editer l'article <?php echo htmlentities($post->getName()); ?></h1>
 
-<form action="" method="post">
+<form action="" method="POST">
+    <?php echo $form->input('name', 'Titre'); ?>
+    <?php echo $form->input('slug', 'URL'); ?>
+    <?php echo $form->textarea('content', 'Contenu')?>
+    <?php echo $form->input('created_at', 'Date de création'); ?>
 
-    <div class="form-group">
-        <label for="name">Titre</label>
-        <input type="text" class="form-control <?php echo isset($errors['name']) ? 'is-invalid" ' : ''; ?>"
-               name="name" value="<?php echo htmlentities($post->getName()); ?>" required>
-        <?php if (isset($errors['name'])): ?>
-        <div class="invalid-feedback">
-            <?php echo implode('<br>', $errors['name']) ?>
-        </div>
-        <?php endif; ?>
-    </div>
     <button class="btn btn-primary">Modifier</button>
-
 </form>
