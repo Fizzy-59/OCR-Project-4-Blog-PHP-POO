@@ -15,6 +15,8 @@ class Post
     private $created_at;
     private $categories = [];
 
+
+
     /**
      * @return mixed
      */
@@ -39,14 +41,6 @@ class Post
         return nl2br( htmlentities($this->content) );
     }
 
-    /**
-     * @return mixed
-     * @throws Exception
-     */
-    public function getCreatedAt()
-    {
-        return new DateTime($this->created_at);
-    }
 
     /**
      * @return Category[]
@@ -72,11 +66,33 @@ class Post
 
     /**
      * @return mixed
+     * @throws Exception
      */
-    public function getSlug()
+    public function getCreatedAt()
+    {
+        return new DateTime($this->created_at);
+    }
+
+
+    public function setCreatedAt($date)
+    {
+        $this->created_at = $date;
+
+        return $this;
+    }
+
+    public function getSlug(): String
     {
         return $this->slug;
     }
+
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
 
     public function addCategory(Category $category): void
     {
@@ -109,24 +125,7 @@ class Post
         $this->content = $content;
     }
 
-    /**
-     * @param mixed $slug
-     */
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
-        return $this;
-    }
 
-    /**
-     * @param mixed $created_at
-     */
-    public function setCreatedAt(string $date)
-    {
-        $this->created_at = $date;
-
-        return $this;
-    }
 
 }

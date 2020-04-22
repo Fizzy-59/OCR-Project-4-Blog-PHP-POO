@@ -4,6 +4,8 @@
 namespace App\HTML;
 
 
+use DateTimeInterface;
+
 class Form
 {
     private $data;
@@ -16,35 +18,35 @@ class Form
 
     }
 
-    public function input(string $key, string $label): string
+    public function input(string $key, string $label)
     {
 
         $value = $this->getValue($key);
 
         return <<<HTML
         <div class="form-group">
-            <label for="filed{$key}">{$label}</label>
-            <input type="text" id="field{$key}" class={$this->getInputClass($key)} name="{$key}" value="{$value}" required> 
+            <label for="field{$key}">{$label}</label>
+            <input type="text" id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}" value="{$value}" required> 
             {$this->getErrorFeedback($key)}
         </div>
 HTML;
     }
 
-    public function textarea(string $key, string $label): string
+    public function textarea(string $key, string $label)
     {
         $value = $this->getValue($key);
 
         return <<<HTML
         <div class="form-group">
-            <label for="filed{$key}">{$label}</label>
-            <textarea type="text" id="filed{$key}" class={$this->getInputClass($key)} name="{$key}" required> {$value} </textarea>
+            <label for="field{$key}">{$label}</label>
+            <textarea type="text" id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}" required> {$value} </textarea>
             {$this->getErrorFeedback($key)}
         </div>
 HTML;
 
     }
 
-    private function getValue(string $key)
+    private function getValue(string $key): ?string
     {
         if(is_array($this->data))
             {
@@ -55,7 +57,7 @@ HTML;
 
         $value =  $this->data->$method();
 
-        if ($value instanceof \DateTimeInterface)
+        if ($value instanceof DateTimeInterface)
         {
             return $value->format('Y-m-d H:i:s');
         }

@@ -25,10 +25,10 @@ if (!empty($_POST))
 
     $post
         ->setName($_POST['name'])
-        ->setContent($_POST['content'])
+        ->setCreatedAt($_POST['created_at'])
         ->setSlug($_POST['slug'])
-        ->setCreatedAt($_POST['created_at']);
-
+        ->setContent($_POST['content'])
+    ;
 
     if ($v->validate())
     {

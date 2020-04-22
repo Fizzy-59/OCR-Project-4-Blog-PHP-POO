@@ -21,8 +21,8 @@ final class PostTable extends Table
         $ok = $query->execute(
             [
                 'id'      => $post->getId(),
-                'name'    => $post->getName(),
                 'slug'    => $post->getSlug(),
+                'name'    => $post->getName(),
                 'content' => $post->getContent(),
                 'created' => $post->getCreatedAt()->format('Y-m-d H:i:s')
             ]);
