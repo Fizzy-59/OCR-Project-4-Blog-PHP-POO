@@ -4,6 +4,8 @@ use App\Connection;
 use App\HTML\Form;
 use App\Table\PostTable;
 use App\Validator;
+use App\Validators\PostValidator;
+
 
 $pdo = Connection::getPDO();
 
@@ -18,16 +20,13 @@ if (!empty($_POST))
     // Valitron is a simple, minimal and elegant stand-alone validation library
     // https://github.com/vlucas/valitron
     Validator::lang('fr');
-    $v = new Validator($_POST);
-
-    $v->rule('required', ['name', 'slug']);
-    $v->rule('lengthBetween', ['name', 'slug'], 3, 200);
+    $v = new PostValidator($_POST, $postTable, $post->getId());
 
     $post
         ->setName($_POST['name'])
-        ->setCreatedAt($_POST['created_at'])
         ->setSlug($_POST['slug'])
         ->setContent($_POST['content'])
+        ->setCreatedAt($_POST['created_at'])
     ;
 
     if ($v->validate())

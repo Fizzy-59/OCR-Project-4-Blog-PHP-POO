@@ -18,15 +18,13 @@ class Form
 
     }
 
-    public function input(string $key, string $label)
+    public function input (string $key, string $label): string
     {
-
         $value = $this->getValue($key);
-
         return <<<HTML
-        <div class="form-group">
+          <div class="form-group">
             <label for="field{$key}">{$label}</label>
-            <input type="text" id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}" value="{$value}" required> 
+            <input type="text" id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}" value="{$value}" required>
             {$this->getErrorFeedback($key)}
         </div>
 HTML;
@@ -81,14 +79,11 @@ HTML;
         return $inputClass;
     }
 
-    private function getErrorFeedback(string $key): string
+    private function getErrorFeedback (string $key): string
     {
-
-        if (isset($this->errors[$key]))
-        {
+        if (isset($this->errors[$key])) {
             return '<div class="invalid-feedback">' . implode('<br>', $this->errors[$key]) . '</div>';
         }
-
         return '';
     }
 }

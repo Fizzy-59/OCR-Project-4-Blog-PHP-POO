@@ -47,4 +47,28 @@ abstract class Table
         return $result;
     }
 
+
+    /**
+     * Check if a enrollment already exists at the table
+     *
+     * @param  string $field
+     * @param  $value
+     * @param  int|null $except
+     * @return bool
+     */
+    public function exists (string $field, $value, ?int $except = null): bool
+    {
+        $sql = "SELECT COUNT(id) FROM {$this->table} WHERE $field = ?";
+        $params = [$value];
+
+        // Check all except current id
+        if ($except !== null) {
+            $sql .= " AND id != ?";
+            $params[] = $except;
+        }
+        $query = $this->pdo->prepare($sql);
+        $query->execute($params);
+        return (int)$query->fetch(PDO::FETCH_NUM)[0] > 0;
+    }
+
 }

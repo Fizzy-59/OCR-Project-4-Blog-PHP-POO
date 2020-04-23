@@ -120,9 +120,10 @@ class Post
     /**
      * @param mixed $content
      */
-    public function setContent($content): void
+    public function setContent($content)
     {
         $this->content = $content;
+        return $this;
     }
 
 
