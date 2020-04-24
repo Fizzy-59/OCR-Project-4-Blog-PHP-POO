@@ -12,15 +12,15 @@ class Post
     private $slug;
     private $name;
     private $content;
-    private $created_at;
     private $categories = [];
+    private $created_at;
 
 
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -77,11 +77,10 @@ class Post
     public function setCreatedAt($date)
     {
         $this->created_at = $date;
-
         return $this;
     }
 
-    public function getSlug(): String
+    public function getSlug(): ?String
     {
         return $this->slug;
     }
@@ -126,7 +125,11 @@ class Post
         return $this;
     }
 
-
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
 
 
 }

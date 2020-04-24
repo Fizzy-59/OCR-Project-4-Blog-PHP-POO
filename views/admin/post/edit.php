@@ -2,8 +2,8 @@
 
 use App\Connection;
 use App\HTML\Form;
+use App\ObjectHelper;
 use App\Table\PostTable;
-use App\Validator;
 use App\Validators\PostValidator;
 
 
@@ -19,15 +19,10 @@ if (!empty($_POST))
 {
     // Valitron is a simple, minimal and elegant stand-alone validation library
     // https://github.com/vlucas/valitron
-    Validator::lang('fr');
     $v = new PostValidator($_POST, $postTable, $post->getId());
+    ObjectHelper::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
 
-    $post
-        ->setName($_POST['name'])
-        ->setSlug($_POST['slug'])
-        ->setContent($_POST['content'])
-        ->setCreatedAt($_POST['created_at'])
-    ;
+
 
     if ($v->validate())
     {
@@ -50,6 +45,13 @@ if ($success): ?>
     </div>
 <?php endif; ?>
 
+<?php
+    if (isset($_GET['created'])): ?>
+    <div class="alert alert-success">
+        L'article a bien été créé.
+    </div>
+<?php endif; ?>
+
 <?php if (!empty($errors)): ?>
 <div class="alert alert-danger">
     L'article n'a pas pu être modifié, merci de corriger vos erreurs.
@@ -58,11 +60,4 @@ if ($success): ?>
 
 <h1>Editer l'article <?php echo htmlentities($post->getName()); ?></h1>
 
-<form action="" method="POST">
-    <?php echo $form->input('name', 'Titre'); ?>
-    <?php echo $form->input('slug', 'URL'); ?>
-    <?php echo $form->textarea('content', 'Contenu')?>
-    <?php echo $form->input('created_at', 'Date de création'); ?>
-
-    <button class="btn btn-primary">Modifier</button>
-</form>
+<?php require('_form.php') ?>
