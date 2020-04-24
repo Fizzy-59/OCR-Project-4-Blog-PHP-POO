@@ -82,7 +82,7 @@ HTML;
     private function getErrorFeedback (string $key): string
     {
         if (isset($this->errors[$key])) {
-            return '<div class="invalid-feedback">' . implode('<br>', $this->errors[$key]) . '</div>';
+            return '<div class="alert alert-danger">' . implode('<br>', $this->errors[$key]) . '</div>';
         }
         return '';
     }
