@@ -18,7 +18,10 @@
     <a href="#" class="navbar-brand">Mon site</a>
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a href="<?php echo $router->url('admin_posts'); ?>" class="nav-mink">Articles</a>
+            <a href="<?php echo $router->url('admin_posts'); ?>" class="nav-link">Articles</a>
+        </li>
+        <li class="nav-item">
+            <a href="<?php echo $router->url('admin_categories'); ?>" class="nav-link">Catégories</a>
         </li>
     </ul>
 </nav>

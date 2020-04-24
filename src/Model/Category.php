@@ -47,6 +47,27 @@ class Category
     public function setPost(Post $post)
     {
         $this->post = $post;
+        return $this;
+    }
+
+    /**
+     * @param mixed $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * @param mixed $name
+     * @return Category
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
     }
 
 

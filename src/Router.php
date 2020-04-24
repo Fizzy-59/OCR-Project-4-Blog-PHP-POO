@@ -63,11 +63,16 @@ class Router
         $params = $match['params'];
         $router = $this;
 
+        // See if there is admin in the route, if yes change the default layout
+        $isAdmin = strpos($view, '/admin/') !== false;
+        $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
+
+
         ob_start();
         require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
         $content_for_layout = ob_get_clean();
 
-        require $this->viewPath . DIRECTORY_SEPARATOR . 'layouts/default.php';
+        require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
 
         return $this;
     }

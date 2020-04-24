@@ -8,6 +8,8 @@ Auth::check();
 
 $title = "Administration";
 
+$router->layout = "admin/layouts/default";
+
 $pdo = Connection::getPDO();
 $link = $router->url('admin_posts');
 [$posts, $pagination] = (new PostTable($pdo))->findPaginated();

@@ -5,6 +5,8 @@ namespace App\Table;
 
 
 use App\Model\Category;
+use App\Model\Post;
+use Exception;
 use PDO;
 
 final class CategoryTable extends Table
@@ -40,4 +42,13 @@ final class CategoryTable extends Table
             $postsById[$category->getPostId()]->addCategory($category);
         }
     }
+
+    public function all (): array
+    {
+        $this->queryAndFetchAll("SELECT * FROM {$this->table} ORDER BY id DESC");
+    }
 }
+
+
+
+
