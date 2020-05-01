@@ -154,11 +154,11 @@ class Post
 
     public function getImageURL(string $format): ?string
     {
-        if(!empty($this->image))
+        if(empty($this->image))
         {
             return null;
         }
-        return '/posts' . $this->image . '_' . $format . '.jpg';
+        return '/posts/' . $this->image . '_' . $format . '.jpg';
     }
 
     /**

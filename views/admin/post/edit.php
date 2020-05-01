@@ -35,6 +35,7 @@ if (!empty($_POST))
     if ($v->validate())
     {
         PostAttachment::upload($post);
+
         $postTable->updatePost($post);
         $postTable->attachCategories($post->getId(), $_POST['categories_ids']);
 
