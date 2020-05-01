@@ -27,6 +27,7 @@ abstract class Table
         $this->pdo = $pdo;
     }
 
+
     /**
      * Find a registration against the primary key
      *

@@ -15,6 +15,7 @@ $errors = [];
 $post = new Post();
 $post->setCreatedAt(date('Y-m-d H:i:s'));
 
+
 if (!empty($_POST))
 {
     $pdo = Connection::getPDO();
