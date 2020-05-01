@@ -4,7 +4,7 @@
     <?php echo $form->input('slug', 'URL'); ?>
 
     <button class="btn btn-primary">
-        <?php if ($category->getId() !== null) : ?>
+        <?php if ($item->getId() !== null) : ?>
             Modifier
         <?php else: ?>
             Créer
