@@ -1,4 +1,4 @@
-<?php
+ <?php
 $categories = array_map(function ($category) use($router) {
     $url = $router->url('category', ['id' => $category->getId(), 'slug' => $category->getSlug()]);
     return <<<HTML
@@ -6,11 +6,14 @@ $categories = array_map(function ($category) use($router) {
 HTML;
 }, $post->getCategories());
 
-//dd(implode(',', $categories));
 
 ?>
 
 <div class="card mb-3">
+    <?php if ($post->getImage()): ?>
+        <img src="<?php echo $post->getImageURL('small'); ?>" alt="" class="card-img-top">
+    <?php endif; ?>
+
     <div class="card-body">
 
         <!--Title-->

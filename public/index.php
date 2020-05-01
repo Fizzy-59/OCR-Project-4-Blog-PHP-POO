@@ -11,6 +11,9 @@ $whoops = new Run;
 $whoops->pushHandler(new PrettyPageHandler);
 $whoops->register();
 
+// Constant for images
+define('UPLOAD_PATH', __DIR__, DIRECTORY_SEPARATOR . 'uploads');
+
 // Redirect if number of page is 1 without this parameter
 if (isset($_GET['page']) && $_GET['page'] === '1')
 {

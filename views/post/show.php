@@ -37,5 +37,11 @@ if ($post->getSlug() !== $slug)
 <a href="<?= $categoryUrl ?>"> <?= htmlentities($category->getName()); ?> </a>
 <?php endforeach ?>
 
+<?php if ($post->getImage()): ?>
+    <p>
+        <img src="<?php echo $post->getImageURL('large'); ?>" alt=""  style="width: 100%">
+    </p>
+<?php endif; ?>
+
 <!--Content-->
 <p> <?= $post->getFormattedContent() ?></p>

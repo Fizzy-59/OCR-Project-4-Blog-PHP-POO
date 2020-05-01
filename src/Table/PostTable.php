@@ -20,7 +20,8 @@ final class PostTable extends Table
                 'slug'    => $post->getSlug(),
                 'name'    => $post->getName(),
                 'content' => $post->getContent(),
-                'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s')
+                'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
+                'image' => $post->getImage()
             ], $post->getId())
         ;
     }
@@ -33,6 +34,8 @@ final class PostTable extends Table
                 'slug'    => $post->getSlug(),
                 'content' => $post->getContent(),
                 'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
+                'image' => $post->getImage()
+
             ])
         ;
 

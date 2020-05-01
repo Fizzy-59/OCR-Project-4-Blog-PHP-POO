@@ -40,6 +40,24 @@ HTML;
     }
 
     /**
+     * Generate file field
+     *
+     * @param string $key
+     * @param string $label
+     * @return string
+     */
+    public function file (string $key, string $label): string
+    {
+        return <<<HTML
+          <div class="form-group">
+            <label for="field{$key}">{$label}</label>
+            <input type="file" id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}">
+            {$this->getErrorFeedback($key)}
+        </div>
+HTML;
+    }
+
+    /**
      * Generate textarea field
      *
      * @param  string $key

@@ -13,6 +13,7 @@
         "ext-pdo": "*",
         "fzaninotto/faker": "^1.9",
         "twig/twig": "^2.0",
-        "vlucas/valitron": "^1.4"
+        "vlucas/valitron": "^1.4",
+        "intervention/image": "^2.5"
     }
 }

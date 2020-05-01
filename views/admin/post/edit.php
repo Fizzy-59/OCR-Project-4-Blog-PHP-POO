@@ -1,5 +1,6 @@
 <?php
 
+use App\Attachment\PostAttachment;
 use App\Auth;
 use App\Connection;
 use App\HTML\Form;
@@ -24,13 +25,16 @@ $errors = [];
 
 if (!empty($_POST))
 {
+    $data = array_merge($_POST, $_FILES);
+
     // Valitron is a simple, minimal and elegant stand-alone validation library
     // https://github.com/vlucas/valitron
-    $v = new PostValidator($_POST, $postTable, $post->getId(), $categories);
-    ObjectHelper::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
+    $v = new PostValidator($data, $postTable, $post->getId(), $categories);
+    ObjectHelper::hydrate($post, $data, ['name', 'content', 'slug', 'created_at', 'image']);
 
     if ($v->validate())
     {
+        PostAttachment::upload($post);
         $postTable->updatePost($post);
         $postTable->attachCategories($post->getId(), $_POST['categories_ids']);
 
