@@ -131,5 +131,24 @@ class Post
         return $this;
     }
 
+    public function getCategoriesIds(): array
+    {
+        $ids = [];
+        foreach ($this->categories as $category)
+        {
+            $ids[] = $category->getId();
+        }
+        return $ids;
+    }
+
+    /**
+     * @param  array $categories
+     * @return Post
+     */
+    public function setCategories(array $categories): self
+    {
+        $this->categories = $categories;
+        return $this;
+    }
 
 }

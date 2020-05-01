@@ -5,7 +5,6 @@ namespace App\Table;
 
 use App\PaginatedQuery;
 use App\Model\Post;
-use Exception;
 
 final class PostTable extends Table
 {
@@ -24,6 +23,7 @@ final class PostTable extends Table
                 'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s')
             ], $post->getId())
         ;
+
     }
 
     public function createPost(Post $post): void
@@ -38,6 +38,18 @@ final class PostTable extends Table
         ;
 
         $post->setId($id);
+    }
+
+
+    public function attachCategories (int $id, array $categories): void
+    {
+        $this->pdo->exec('DELETE FROM post_category WHERE post_id = ' . $id);
+
+        $query = $this->pdo->prepare('INSERT INTO post_category SET post_id = ?, category_id = ?');
+        foreach ($categories as $category)
+        {
+            $query->execute([$id, $category]);
+        }
     }
 
 

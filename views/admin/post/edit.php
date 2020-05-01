@@ -4,6 +4,7 @@ use App\Auth;
 use App\Connection;
 use App\HTML\Form;
 use App\ObjectHelper;
+use App\Table\CategoryTable;
 use App\Table\PostTable;
 use App\Validators\PostValidator;
 
@@ -12,7 +13,11 @@ Auth::check();
 $pdo = Connection::getPDO();
 
 $postTable = new PostTable($pdo);
+$categoryTable = new CategoryTable($pdo);
+$categories = $categoryTable->list();
+
 $post = $postTable->find($params['id']);
+$categoryTable->hydratePost([$post]);
 $success = false;
 
 $errors = [];
@@ -21,12 +26,15 @@ if (!empty($_POST))
 {
     // Valitron is a simple, minimal and elegant stand-alone validation library
     // https://github.com/vlucas/valitron
-    $v = new PostValidator($_POST, $postTable, $post->getId());
+    $v = new PostValidator($_POST, $postTable, $post->getId(), $categories);
     ObjectHelper::hydrate($post, $_POST, ['name', 'content', 'slug', 'created_at']);
 
     if ($v->validate())
     {
         $postTable->updatePost($post);
+        $postTable->attachCategories($post->getId(), $_POST['categories_ids']);
+
+        $categoryTable->hydratePost([$post]);
         $success = true;
     }
     else
