@@ -49,6 +49,18 @@ class PaginatedQuery
 
     }
 
+    public function nextLink(string $link): ?string
+    {
+        $currentPage = $this->getCurrentPage();
+        $pages = $this->getPages();
+        if ($currentPage >= $pages) return null;
+        $link .= "?page=" . ($currentPage + 1);
+
+        return <<<HTML
+             <a href="{$link}" class="btn btn-primary"> Page suivante &raquo; </a>
+HTML;
+    }
+
     public function previousLink(string $link): ?string
     {
         $currentPage = $this->getCurrentPage();
@@ -62,17 +74,6 @@ class PaginatedQuery
 HTML;
     }
 
-    public function nextLink(string $link): ?string
-    {
-        $currentPage = $this->getCurrentPage();
-        $pages = $this->getPages();
-        if ($currentPage >= $pages) return null;
-        $link .= "?page=" . ($currentPage + 1);
-
-        return <<<HTML
-             <a href="{$link}" class="btn btn-primary"> &laquo; Page suivante </a>
-HTML;
-    }
 
     private function getCurrentPage(): int
     {

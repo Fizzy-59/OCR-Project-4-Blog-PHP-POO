@@ -47,7 +47,3 @@ final class CategoryTable extends Table
         return $this->queryAndFetchAll("SELECT * FROM {$this->table} ORDER BY id DESC");
     }
 }
-
-
-
-
