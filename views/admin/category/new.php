@@ -22,17 +22,18 @@ if (!empty($_POST))
 
     // Valitron is a simple, minimal and elegant stand-alone validation library
     // https://github.com/vlucas/valitron
-    $v = new CategoryValidator($_POST, $table, $post->getId());
+    $v = new CategoryValidator($_POST, $table);
     ObjectHelper::hydrate($item, $_POST, ['name', 'slug']);
 
     // Creating data in database
     if ($v->validate())
     {
         $table->create(
-                [
-                    'name' => $item->getName(),
-                    'slug' => $item->getSlug()
-                ]);
+            [
+                'name' => $item->getName(),
+                'slug' => $item->getSlug()
+            ]
+        );
         header('Location: ' . $router->url('admin_categories') . '?created=1');
         exit();
     }

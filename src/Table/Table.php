@@ -82,6 +82,10 @@ abstract class Table
         return $this->pdo->query($sql, PDO::FETCH_CLASS, $this->class)->fetchAll();
     }
 
+    /**
+     * @param  int $id
+     * @throws Exception
+     */
     public function delete(int $id)
     {
         $query = $this->pdo->prepare("DELETE FROM {$this->table} WHERE id = ?");
@@ -92,10 +96,16 @@ abstract class Table
         };
     }
 
+    /**
+     * @param  array $data
+     * @return int
+     * @throws Exception
+     */
     public function create(array $data): int
     {
         $sqlFields = [];
 
+        // Dynamic generation for query sql params
         foreach ($data as $key => $value)
         {
             $sqlFields[] = "$key = :$key";
@@ -114,6 +124,11 @@ abstract class Table
         return (int) $this->pdo->lastInsertId();
     }
 
+    /**
+     * @param  array $data
+     * @param  int $id
+     * @throws Exception
+     */
     public function update(array $data, int $id)
     {
         $sqlFields = [];
@@ -134,8 +149,13 @@ abstract class Table
             throw new Exception("Impossible de modifier l'enrengistrement dans la table {$this->table}");
         };
 
-
     }
+
+
+    /**
+     * @param  string $sql
+     * @return array
+     */
     public function queryAndFetchAll (string $sql): array
     {
         return $this->pdo->query($sql, PDO::FETCH_CLASS, $this->class)->fetchAll();

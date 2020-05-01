@@ -70,5 +70,15 @@ class Category
         return $this;
     }
 
+    /**
+     * @param mixed $id
+     * @return Category
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
 
 }

@@ -5,8 +5,7 @@ namespace App\Table;
 
 
 use App\Model\Category;
-use App\Model\Post;
-use Exception;
+
 use PDO;
 
 final class CategoryTable extends Table
@@ -32,10 +31,10 @@ final class CategoryTable extends Table
 
         $categories = $this->pdo
             ->query('SELECT c.*, pc.post_id 
-        FROM post_category pc 
-        JOIN category c on c.id = pc.category_id 
-        WHERE pc.post_id IN(' . implode(',', array_keys($postsById)) . ') 
-        ')->fetchAll(PDO::FETCH_CLASS, $this->class);
+            FROM post_category pc 
+            JOIN category c ON c.id = pc.category_id 
+            WHERE pc.post_id IN (' . implode(',', array_keys($postsById)) . ') '
+            )->fetchAll(PDO::FETCH_CLASS, $this->class);
 
         foreach ($categories as $category)
         {
@@ -45,7 +44,7 @@ final class CategoryTable extends Table
 
     public function all (): array
     {
-        $this->queryAndFetchAll("SELECT * FROM {$this->table} ORDER BY id DESC");
+        return $this->queryAndFetchAll("SELECT * FROM {$this->table} ORDER BY id DESC");
     }
 }
 

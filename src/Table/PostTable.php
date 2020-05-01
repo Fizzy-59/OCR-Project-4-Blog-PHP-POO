@@ -15,7 +15,6 @@ final class PostTable extends Table
 
     public function updatePost(Post $post): void
     {
-
         $this->update(
             [
                 'id'      => $post->getId(),
@@ -25,19 +24,18 @@ final class PostTable extends Table
                 'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s')
             ], $post->getId())
         ;
-
     }
 
     public function createPost(Post $post): void
     {
-
         $id = $this->create(
             [
                 'name'    => $post->getName(),
                 'slug'    => $post->getSlug(),
                 'content' => $post->getContent(),
                 'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s'),
-            ]);
+            ])
+        ;
 
         $post->setId($id);
     }

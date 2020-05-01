@@ -12,7 +12,8 @@ $router->layout = "admin/layouts/default";
 
 $pdo = Connection::getPDO();
 $link = $router->url('admin_categories');
-$items = (new CategoryTable($pdo))->all();$item
+//dd($pdo);
+$items = (new CategoryTable($pdo))->all();
 ?>
 
 
@@ -23,11 +24,11 @@ $items = (new CategoryTable($pdo))->all();$item
 <?php endif ?>
 
 
-
 <table class="table">
     <thead>
     <th>#</th>
     <th>Titre</th>
+    <th>URL</th>
     <th>
         <a href="<?php echo $router->url('admin_category_new'); ?>" class="btn btn-primary">Nouveau</a>
     </th>
@@ -41,6 +42,7 @@ $items = (new CategoryTable($pdo))->all();$item
             <?php echo htmlentities($item->getName()); ?>
             </a>
         </td>
+        <td> <?php echo $item->getSlug(); ?> </td>
         <td>
             <a href="<?php echo $router->url('admin_category', ['id' => $item->getId()]); ?>" class="btn btn-primary">
                 Editer

@@ -12,7 +12,3 @@ $table->delete($params['id']);
 header('Location:' . $router->url('admin_categories') . '?delete=1');
 
 ?>
-
-
-
-<h1>Suppression de <?php echo $params['id']; ?></h1>

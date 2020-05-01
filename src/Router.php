@@ -64,7 +64,7 @@ class Router
         $router = $this;
 
         // See if there is admin in the route, if yes change the default layout
-        $isAdmin = strpos($view, '/admin/') !== false;
+        $isAdmin = strpos($view, 'admin/') !== false;
         $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
 
 
