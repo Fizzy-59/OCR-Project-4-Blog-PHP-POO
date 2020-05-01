@@ -18,18 +18,34 @@ class Form
 
     }
 
+    /**
+     * Generate input field
+     *
+     * @param  string $key
+     * @param  string $label
+     * @return string
+     */
     public function input (string $key, string $label): string
     {
         $value = $this->getValue($key);
+        $type = $key === "password" ? "password" : "text";
+
         return <<<HTML
           <div class="form-group">
             <label for="field{$key}">{$label}</label>
-            <input type="text" id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}" value="{$value}" required>
+            <input type="{$type}" id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}" value="{$value}" required>
             {$this->getErrorFeedback($key)}
         </div>
 HTML;
     }
 
+    /**
+     * Generate textarea field
+     *
+     * @param  string $key
+     * @param  string $label
+     * @return string
+     */
     public function textarea(string $key, string $label)
     {
         $value = $this->getValue($key);
@@ -44,6 +60,12 @@ HTML;
 
     }
 
+    /**
+     *
+     *
+     * @param  string $key
+     * @return mixed|string|null
+     */
     private function getValue(string $key)
     {
         if(is_array($this->data))
@@ -79,10 +101,26 @@ HTML;
         return $inputClass;
     }
 
+    /**
+     * Error management
+     *
+     * @param  string $key
+     * @return string
+     */
     private function getErrorFeedback (string $key): string
     {
-        if (isset($this->errors[$key])) {
-            return '<div class="alert alert-danger">' . implode('<br>', $this->errors[$key]) . '</div>';
+        if (isset($this->errors[$key]))
+        {
+            if(is_array($this->errors[$key]))
+            {
+                $error = implode('<br>', $this->errors[$key]);
+            }
+            else
+            {
+                $error = $this->errors[$key];
+            }
+
+            return '<div class="alert alert-danger">' . $error . '</div>';
         }
         return '';
     }

@@ -23,7 +23,6 @@ final class PostTable extends Table
                 'created_at' => $post->getCreatedAt()->format('Y-m-d H:i:s')
             ], $post->getId())
         ;
-
     }
 
     public function createPost(Post $post): void
@@ -68,7 +67,6 @@ final class PostTable extends Table
         (new CategoryTable($this->pdo))->hydratePost($posts);
 
         return [$posts, $paginatedQuery];
-
     }
 
     public function findPaginatedForCategory(int $categoryId)
@@ -88,7 +86,6 @@ final class PostTable extends Table
         (new CategoryTable($this->pdo))->hydratePost($posts);
 
         return [$posts, $paginatedQuery];
-
     }
 
 }

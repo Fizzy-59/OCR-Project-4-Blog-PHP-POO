@@ -3,6 +3,7 @@
 namespace App;
 
 use AltoRouter;
+use App\Table\Exception\NotFoundException;
 use Exception;
 
 class Router
@@ -59,7 +60,7 @@ class Router
     public function run(): self
     {
         $match = $this->router->match();
-        $view  = $match['target'];
+        $view  = $match['target'] ?: 'e404';
         $params = $match['params'];
         $router = $this;
 
@@ -67,12 +68,16 @@ class Router
         $isAdmin = strpos($view, 'admin/') !== false;
         $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
 
+        try {
+            ob_start();
+            require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
+            $content_for_layout = ob_get_clean();
 
-        ob_start();
-        require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
-        $content_for_layout = ob_get_clean();
-
-        require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
+            require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
+        } catch (NotFoundException $e) {
+            header('Location: ' . $this->url('login') . '?forbidden=1');
+            exit();
+        }
 
         return $this;
     }

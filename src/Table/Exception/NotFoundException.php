@@ -5,13 +5,17 @@ namespace App\Table\Exception;
 
 
 use Exception;
-use Throwable;
 
 class NotFoundException extends Exception
 {
-    public function __construct(string $table, int $id)
+    /**
+     * NotFoundException constructor.
+     *
+     * @param string $table
+     * @param $id
+     */
+    public function __construct(string $table, $id)
     {
-        $this->message = "Aucun enrengistrement ne correspond à l'id #$id dans la table '$table'";
+        $this->message = "Aucun enregistrement ne correspond à l'id #$id dans la table '$table'";
     }
-
 }
