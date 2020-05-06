@@ -9,8 +9,8 @@ use Exception;
 class Router
 {
 
+    public static $router;
     private $viewPath;
-    private $router;
 
     /**
      * Router constructor.
@@ -19,19 +19,24 @@ class Router
     public function __construct(string $viewPath)
     {
         $this->viewPath = $viewPath;
-        $this->router = new AltoRouter();
+        self::$router = new AltoRouter();
     }
 
-    public function get(string $url, string $view, ?string $name = null): self
+    public static function getInstance ()
     {
-        $this->router->map('GET', $url, $view, $name);
+        return self::$router ;
+    }
+
+    public function get( $url,  $view, ?string $name = null): self
+    {
+        self::$router->map('GET', $url, $view, $name);
 
         return $this;
     }
 
     public function post(string $url, string $view, ?string $name = null): self
     {
-        $this->router->map('POST', $url, $view, $name);
+        self::$router->map('POST', $url, $view, $name);
 
         return $this;
     }
@@ -47,38 +52,25 @@ class Router
      */
     public function match(string $url, string $view, ?string $name = null): self
     {
-        $this->router->map('POST|GET', $url, $view, $name);
+        self::$router->map('POST|GET', $url, $view, $name);
 
         return $this;
     }
 
     public function url(string $nameRoute, array $params = [])
     {
-        return $this->router->generate($nameRoute, $params);
+        return self::$router->generate($nameRoute, $params);
     }
 
-    public function run(): self
+    public function run()
     {
-        $match = $this->router->match();
+        $match = self::$router->match();
         $view  = $match['target'] ?: 'e404';
         $params = $match['params'];
-        $router = $this;
 
-        // See if there is admin in the route, if yes change the default layout
-        $isAdmin = strpos($view, 'admin/') !== false;
-        $layout = $isAdmin ? 'admin/layouts/default' : 'layouts/default';
+        $controller = 'App\\Controller\\' . $match['target']['controller'] . 'Controller';
+        $controller = new $controller();
+        call_user_func_array([$controller, $match['target']['action']], $params);
 
-        try {
-            ob_start();
-            require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
-            $content_for_layout = ob_get_clean();
-
-            require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
-        } catch (NotFoundException $e) {
-            header('Location: ' . $this->url('login') . '?forbidden=1');
-            exit();
-        }
-
-        return $this;
     }
 }

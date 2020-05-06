@@ -1,5 +1,6 @@
 <?php
 
+use App\Controller\PostsController;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -36,15 +37,14 @@ if (isset($_GET['page']) && $_GET['page'] === '1')
 
 //A lightning fast router for PHP : Altorouter
 //https://packagist.org/packages/altorouter/altorouter
-$router = new AltoRouter();
 
-$router = new App\Router(dirname(__DIR__) . '/views');
+$router = new App\Router(dirname(__DIR__) . '/src/Controller');
 
 $router
     // Display pages
-    ->get('/', 'post/index', 'home')
+    ->get('/', ['controller' => 'Posts', 'action' => 'index'] ,'home')
     ->get('/blog/category/[*:slug]-[i:id]', 'category/show', 'category')
-    ->get('/blog/[*:slug]-[i:id]', 'post/show', 'post')
+    ->get('/blog/[*:slug]-[i:id]', ['controller' => 'Posts', 'action' => 'show'], 'post')
 
     // Login & Logout
     ->match('/login', 'auth/login', 'login')
@@ -60,6 +60,7 @@ $router
     ->get('/admin/categories', 'admin/category/index', 'admin_categories')
     ->match('/admin/category[i:id]', 'admin/category/edit', 'admin_category')
     ->post('/admin/category[i:id]/delete', 'admin/category/delete', 'admin_category_delete')
-    ->match('/admin/category/new', 'admin/category/new', 'admin_category_new')
+    ->match('/admin/category/new', 'admin/category/new', 'admin_category_new');
 
-    ->run();
+$controller = new \App\Controller\PostsController();
+    $router->run();

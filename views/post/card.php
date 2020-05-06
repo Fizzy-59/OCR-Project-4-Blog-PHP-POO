@@ -1,6 +1,6 @@
  <?php
-$categories = array_map(function ($category) use($router) {
-    $url = $router->url('category', ['id' => $category->getId(), 'slug' => $category->getSlug()]);
+$categories = array_map(function ($category) {
+    $url = $this->router->generate('category', ['id' => $category->getId(), 'slug' => $category->getSlug()]);
     return <<<HTML
       <a href="{$url}">{$category->getName()}</a>
 HTML;
@@ -24,7 +24,7 @@ HTML;
             <?= $post->getcreatedAt()->format('d F y') ?>
             <!-- Lis of categories -->
         <?php if (!empty($post->getCategories())): ?>
-            ::
+
         <?php echo implode(',', $categories); ?>
             <?php endif; ?>
         </p>
@@ -35,7 +35,7 @@ HTML;
         <!--Button-->
         <p>
             <a href="
-            <?= $router->url( 'post', ['id' => $post->getId(), 'slug' => $post->getSlug()] ) ?>"
+            <?= $this->router->generate( 'post', ['id' => $post->getId(), 'slug' => $post->getSlug()] ) ?>"
                class="btn btn-primary">Voir plus
             </a>
         </p>
